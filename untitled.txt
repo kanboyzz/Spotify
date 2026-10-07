@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Buatan Sendiri</title>
+    <!-- Font Awesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-brands fa-spotify"></i>
+                <span>Spotifyku</span>
+            </div>
+
+            <nav class="nav-menu">
+                <ul>
+                    <li class="nav-item active" data-view="home">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Utama</span>
+                    </li>
+                    <li class="nav-item" data-view="search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>Cari</span>
+                    </li>
+                    <li class="nav-item" data-view="library">
+                        <i class="fa-solid fa-book"></i>
+                        <span>Koleksi Kamu</span>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-actions">
+                <button class="btn-action" id="btn-create-playlist">
+                    <i class="fa-solid fa-square-plus"></i> Buat Playlist
+                </button>
+                <button class="btn-action" id="btn-view-liked">
+                    <i class="fa-solid fa-heart"></i> Lagu Disukai
+                </button>
+                <button class="btn-action primary-btn" id="btn-open-upload">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Tambah Lagu
+                </button>
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <div class="playlist-list" id="sidebar-playlists">
+                <!-- User playlists will be inserted here -->
+            </div>
+        </aside>
+
+        <!-- Main Content View -->
+        <main class="main-content">
+            <!-- Topbar Header -->
+            <header class="topbar">
+                <div class="nav-arrows">
+                    <button class="arrow-btn"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="arrow-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+
+                <div class="search-bar-container hidden" id="search-container">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="search-input" placeholder="Apa yang ingin kamu dengarkan?">
+                </div>
+
+                <div class="user-profile">
+                    <button class="upload-badge-btn" id="btn-top-upload">
+                        <i class="fa-solid fa-plus"></i> Upload MP3
+                    </button>
+                    <div class="avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Home View -->
+            <section class="content-view" id="view-home">
+                <h1 id="greeting-text">Selamat Datang</h1>
+
+                <!-- Dynamic Quick Cards Grid -->
+                <div class="quick-cards-grid" id="quick-cards">
+                    <!-- Quick cards inserted via JS -->
+                </div>
+
+                <div class="section-container">
+                    <div class="section-header">
+                        <h2>Daftar Semua Lagu</h2>
+                    </div>
+
+                    <div class="tracks-table-container">
+                        <table class="tracks-table">
+                            <thead>
+                                <tr>
+                                    <th class="col-num">#</th>
+                                    <th>Judul</th>
+                                    <th>Album</th>
+                                    <th class="col-date">Ditambahkan</th>
+                                    <th class="col-time"><i class="fa-regular fa-clock"></i></th>
+                                    <th class="col-action"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="home-tracks-list">
+                                <!-- Tracks rows inserted via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Search View -->
+            <section class="content-view hidden" id="view-search">
+                <h2>Hasil Pencarian</h2>
+                <div class="tracks-table-container">
+                    <table class="tracks-table">
+                        <thead>
+                            <tr>
+                                <th class="col-num">#</th>
+                                <th>Judul</th>
+                                <th>Album</th>
+                                <th class="col-time"><i class="fa-regular fa-clock"></i></th>
+                                <th class="col-action"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="search-tracks-list">
+                            <!-- Search results inserted via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Library View -->
+            <section class="content-view hidden" id="view-library">
+                <h2>Koleksi Musik Kamu</h2>
+                <div class="library-tabs">
+                    <button class="lib-tab active" data-tab="all">Semua</button>
+                    <button class="lib-tab" data-tab="liked">Lagu Disukai</button>
+                    <button class="lib-tab" data-tab="uploaded">Upload Saya</button>
+                </div>
+
+                <div class="tracks-table-container" style="margin-top: 20px;">
+                    <table class="tracks-table">
+                        <thead>
+                            <tr>
+                                <th class="col-num">#</th>
+                                <th>Judul</th>
+                                <th>Album</th>
+                                <th class="col-time"><i class="fa-regular fa-clock"></i></th>
+                                <th class="col-action"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="library-tracks-list">
+                            <!-- Library tracks inserted via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <!-- Player Bar at Bottom -->
+        <footer class="player-bar">
+            <!-- Currently Playing Info -->
+            <div class="now-playing">
+                <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=100&q=80" alt="Cover" id="player-cover" class="now-playing-cover">
+                <div class="now-playing-info">
+                    <div class="track-title" id="player-title">Pilih Lagu</div>
+                    <div class="track-artist" id="player-artist">Spotifyku</div>
+                </div>
+                <button class="btn-icon" id="player-like-btn">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+
+            <!-- Player Controls -->
+            <div class="player-controls">
+                <div class="control-buttons">
+                    <button class="btn-icon" id="btn-shuffle" title="Acak">
+                        <i class="fa-solid fa-shuffle"></i>
+                    </button>
+                    <button class="btn-icon" id="btn-prev" title="Sebelumnya">
+                        <i class="fa-solid fa-backward-step"></i>
+                    </button>
+                    <button class="btn-play-pause" id="btn-play-pause" title="Putar">
+                        <i class="fa-solid fa-play"></i>
+                    </button>
+                    <button class="btn-icon" id="btn-next" title="Berikutnya">
+                        <i class="fa-solid fa-forward-step"></i>
+                    </button>
+                    <button class="btn-icon" id="btn-repeat" title="Ulangi">
+                        <i class="fa-solid fa-repeat"></i>
+                    </button>
+                </div>
+
+                <div class="playback-bar">
+                    <span class="time-text" id="current-time">0:00</span>
+                    <div class="seek-slider-container">
+                        <input type="range" id="seek-slider" min="0" max="100" value="0" class="slider">
+                    </div>
+                    <span class="time-text" id="total-duration">0:00</span>
+                </div>
+            </div>
+
+            <!-- Volume Controls -->
+            <div class="volume-controls">
+                <button class="btn-icon" id="btn-mute">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+                <div class="volume-slider-container">
+                    <input type="range" id="volume-slider" min="0" max="100" value="80" class="slider">
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal Upload Lagu Baru -->
+    <div class="modal-overlay hidden" id="upload-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Tambah Lagu Kamu Sendiri</h3>
+                <button class="close-modal-btn" id="btn-close-upload">&times;</button>
+            </div>
+            <form id="upload-form">
+                <div class="form-group">
+                    <label>Pilih File Audio (MP3 / WAV)</label>
+                    <input type="file" id="input-file" accept="audio/*" required>
+                </div>
+                <div class="form-group">
+                    <label>Judul Lagu</label>
+                    <input type="text" id="input-title" placeholder="Contoh: Lagu Kerenku" required>
+                </div>
+                <div class="form-group">
+                    <label>Nama Penyanyi / Artist</label>
+                    <input type="text" id="input-artist" placeholder="Contoh: Saya Sendiri" required>
+                </div>
+                <div class="form-group">
+                    <label>Nama Album</label>
+                    <input type="text" id="input-album" placeholder="Contoh: Album Pertama" value="Single">
+                </div>
+                <div class="form-group">
+                    <label>URL Gambar Cover (Opsional)</label>
+                    <input type="url" id="input-cover" placeholder="https://images.unsplash.com/...">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="btn-cancel-upload">Batal</button>
+                    <button type="submit" class="btn-primary">Simpan Lagu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script Utama -->
+    <script src="script.js"></script>
+</body>
+</html>
